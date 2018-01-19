@@ -5,16 +5,7 @@ const {ipcRenderer} = require('electron')
 const [config_err, config] = ipcRenderer.sendSync("get-config")
 
 const getConverter = (function(config) {
-    const converter = new showdown.Converter({
-        omitExtraWLInCodeBlocks: true,
-        ghCompatibleHeaderId: true,
-        simplifiedAutoLink: true,
-        excludeTrailingPunctuationFromURLs: true,
-        literalMidWordUnderscores: true,
-        strikethrough: true,
-        tables: true,
-        tasklists: true,
-    })
+    const converter = new showdown.Converter(config)
     return markdown => converter.makeHtml(markdown)
 })
 
@@ -29,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let convert
-    if (config_err !== null) {
-        convert = getConverter({})
+    if (config && config.showdownOptions) {
+        convert = getConverter(config.showdownOptions)
     } else {
-        convert = getConverter(config)
+        convert = getConverter({})
     }
 
     let html = convert(markdown)
