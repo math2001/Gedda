@@ -1,28 +1,16 @@
 const {app, BrowserWindow, ipcMain} = require("electron")
 const {basedir} = require("xdg")
-const {readFile} = require("fs")
+const {readFileSync} = require("fs")
 
 let mainWindow = null;
 
-// don't really know how the filename is going to come in
-// but for now, we'll just set it like this
-
 function getFilename() {
+    if (process.argv[1] === '.') return `${__dirname}/README.md` // for debugging purpose
     return process.argv[1]
 }
 
 function getConfig() {
-    const filename = basedir.configPath("markdownviewer.json")
-    return readFile(filename, 'utf-8').then(content => {
-        let config = {}
-        try {
-            config = JSON.parse(content)
-        } catch (e) {
-            // TODO: log
-            // TODO: display warning
-        }
-        return config
-    })
+    return JSON.parse(readFileSync(basedir.configPath("MDV/conf.json"), 'utf-8'))
 }
 
 function createWindow(width, height) {
@@ -39,3 +27,11 @@ app.on("window-all-closed", () => {
 
 app.on("ready", createWindow)
 
+ipcMain.on("get-config", (event, arg) => {
+    try {
+        event.returnValue = [null, getConfig()]
+    } catch (e) {
+        if (e.message !== undefined) e = e.message
+        event.returnValue = [e, null]
+    }
+})
