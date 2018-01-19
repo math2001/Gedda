@@ -31,7 +31,8 @@ Otherwise it'll show an error above the markdown file every time.
 
 #### `stylesheet <String>`
 
-A path/URL to a style sheet. It replaces the default one.
+A path/URL to a style sheet. It replaces the default one. It is relative from
+the config directory (`~/.config/Gedda`).
 
 #### `showdownOptions <Object>`
 
