@@ -15,11 +15,11 @@ So, here it is, a simple markdown viewer.
 
 ## Customization
 
-Gedda is powered by [electron][], and uses the [`showdown`][showdow] library to
+Gedda is powered by [electron][], and uses the [`showdown`][showdown] library to
 convert the markdown to html.
 
 The default style is the GitHub-like CSS for markdown stolen from
-[`github-markdown-css`][] and tweaked a bit.
+[`github-markdown-css`][github-markdown-css] and tweaked a bit.
 
 And all of those things, you can customize them from your configuration file.
 Geeda uses the XDG convention, so your configuration file is located at
@@ -54,3 +54,8 @@ options is available on the [showdown's wiki][]
     }
 }
 ```
+
+[electron]: https://electron.atom.io/
+[github-markdown-css]: https://github.com/sindresorhus/github-markdown-css
+[showdown]: https://github.com/showdownjs/showdown
+[showdown's wiki]: https://github.com/showdownjs/showdown/wiki/Showdown-options
