@@ -1,33 +1,37 @@
 {
-	"name": "mdv",
-	"version": "0.1.0",
-	"description": "A simple app to just *view* markdown files (formatted)",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/math2001/MDV"
-	},
-	"keywords": [
-		"markdown",
-		"viewer"
-	],
-	"author": "math2001",
-	"license": "MIT",
-	"build": {
-		"appId": "com.electron.MDV",
-		"productName": "Markdown Viewer",
-		"copyright": "Copyright © 2018 Mathieu Paturel",
-		"fileAssociations": {
-			"ext": ".md",
-			"name": "Markdown",
-			"role": "Viewer"
-		}
-	},
-	"dependencies": {
-		"electron": "^1.7.10",
-		"electron-builder": "^19.54.0"
-	}
+    "name": "mdv",
+    "version": "0.1.0",
+    "description": "A simple app to just *view* markdown files (formatted)",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/math2001/MDV"
+    },
+    "keywords": [
+        "markdown",
+        "viewer"
+    ],
+    "author": "math2001",
+    "license": "MIT",
+    "build": {
+        "appId": "com.electron.MDV",
+        "productName": "Markdown Viewer",
+        "copyright": "Copyright © 2018 Mathieu Paturel",
+        "fileAssociations": {
+            "ext": ".md",
+            "name": "Markdown",
+            "role": "Viewer"
+        }
+    },
+    "dependencies": {
+        "showdown": "^1.8.6",
+        "xdg": "^0.1.1"
+    },
+    "devDependencies": {
+        "electron": "^1.7.10",
+        "electron-builder": "^19.54.0"
+    }
 }
