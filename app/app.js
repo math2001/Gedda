@@ -1,6 +1,8 @@
 const fs = require('fs')
 const showdown = require('showdown')
+const {basedir} = require('xdg')
 const {ipcRenderer} = require('electron')
+const path = require('path')
 
 const [config_err, config] = ipcRenderer.sendSync("get-config")
 
@@ -31,9 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let html = convert(markdown)
     if (config === null) {
         html = `<div class='gedda-error'><p>Couldn't load user config, using default one</p><pre>${config_err}</pre></div>${html}`
-    } else {
-        stylesheet.href = config.stylesheet
     }
+    stylesheet.href = basedir.configPath(`Gedda/${config.stylesheet || "_default.css"}`)
 
     document.body.innerHTML = html
     document.title = `Gedda - ${filename}`
