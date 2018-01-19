@@ -24,6 +24,9 @@
             "ext": ".md",
             "name": "Markdown",
             "role": "Viewer"
+        },
+        "linux": {
+            "category": "Utility"
         }
     },
     "dependencies": {

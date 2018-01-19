@@ -8,7 +8,7 @@ let mainWindow = null;
 // but for now, we'll just set it like this
 
 function getFilename() {
-    return `${__dirname}/README.md`
+    return process.argv[1]
 }
 
 function getConfig() {
@@ -27,7 +27,7 @@ function getConfig() {
 
 function createWindow(width, height) {
     mainWindow = new BrowserWindow({width, height})
-    mainWindow.loadURL(`file:///${__dirname}/app/index.html?filename=${getFilename()}`)
+    mainWindow.loadURL(`file:///${__dirname}/app/index.html?filename=${getFilename()}`) // TODO: handle non-existing arguments
     mainWindow.on("close", () => {
         mainWindow = null
     })
@@ -38,3 +38,4 @@ app.on("window-all-closed", () => {
 })
 
 app.on("ready", createWindow)
+
