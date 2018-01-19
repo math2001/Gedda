@@ -10,7 +10,7 @@ function getFilename() {
 }
 
 function getConfig() {
-    return JSON.parse(readFileSync(basedir.configPath("MDV/conf.json"), 'utf-8'))
+    return JSON.parse(readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
 }
 
 function createWindow(width, height) {

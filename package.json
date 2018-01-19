@@ -1,14 +1,14 @@
 {
-    "name": "mdv",
+    "name": "Gedda",
     "version": "0.1.0",
-    "description": "A simple app to just *view* markdown files (formatted)",
+    "description": "A simple markdown viewer (*not* editor)",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/math2001/MDV"
+        "url": "https://github.com/math2001/Gedda"
     },
     "keywords": [
         "markdown",
@@ -17,8 +17,8 @@
     "author": "math2001",
     "license": "MIT",
     "build": {
-        "appId": "com.electron.MDV",
-        "productName": "Markdown Viewer",
+        "appId": "com.electron.Gedda",
+        "productName": "Gedda",
         "copyright": "Copyright © 2018 Mathieu Paturel",
         "fileAssociations": {
             "ext": ".md",

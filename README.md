@@ -1,4 +1,6 @@
-# MDV - Markdown Viewer
+# Gedda
+
+> Markdown viewer
 
 A simple app to just view a markdown file (in it's formatted form of course).
 

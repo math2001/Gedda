@@ -690,14 +690,14 @@
 }
 
 
-.mdv-error {
+.gedda-error {
   color: #D8000C;
   background-color: #FFD2D2;
   padding: 10px 20px;
   border-radius: 3px;
   margin: 20px;
 }
-.mdv-error pre {
+.gedda-error pre {
   background: none;
   padding-top: 0;
   padding-bottom: 0;
