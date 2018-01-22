@@ -1,14 +1,12 @@
 const {app, BrowserWindow, ipcMain, dialog} = require("electron")
-const {basedir} = require("xdg")
-const {readFileSync, writeFileSync} = require("fs")
-const path = require('path')
+const path = require("path")
 
 const getFilename = (argv, wd) => path.resolve(wd, argv[1] === '.' ? argv[2] : argv[1])
 
 let windows = {}
 
 function getConfig() {
-    return JSON.parse(readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
+    return JSON.parse(fs.readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
 }
 
 function createWindow(width, height, filename) {
@@ -38,6 +36,9 @@ app.on("ready", () => {
 })
 
 ipcMain.on("get-config", (event, arg) => {
+    global.basedir = require('xdg').basedir
+    global.fs = require('fs')
+
     try {
         event.returnValue = getConfig()
     } catch (e) {
@@ -51,7 +52,7 @@ ipcMain.on("get-config", (event, arg) => {
         }, index => {
             if (index === 0) {
                 try {
-                    writeFileSync(basedir.configPath('Gedda/conf.json'), '{}\n', 'utf-8')
+                    fs.writeFileSync(basedir.configPath('Gedda/conf.json'), '{}\n', 'utf-8')
                 } catch (e) {
                     dialog.showErrorBox("Couldn't write configuration file",
                     `Couldn't write configuration file:\n\n ${e.toString()}\n\nYou should create it yourself.`)

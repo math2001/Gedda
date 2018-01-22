@@ -1,14 +1,7 @@
-const fs = require('fs')
-const showdown = require('showdown')
-const {basedir} = require('xdg')
-const {ipcRenderer} = require('electron')
-const path = require('path')
-
-const config = ipcRenderer.sendSync("get-config")
-
+const config = require("electron").ipcRenderer.sendSync("get-config")
 
 const getConverter = (function(options) {
-    const converter = new showdown.Converter(options)
+    const converter = new (require('showdown').Converter)(options)
     return markdown => converter.makeHtml(markdown)
 })
 
@@ -18,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let markdown
     try {
-        markdown = fs.readFileSync(filename, 'utf-8')
+        markdown = require('fs').readFileSync(filename, 'utf-8')
     } catch (err) {
         throw err // TODO: log and display warning instead
     }
@@ -31,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let html = convert(markdown)
-    stylesheet.href = basedir.configPath(`Gedda/${config.stylesheet || "_default.css"}`)
+    stylesheet.href = require('xdg').basedir.configPath(`Gedda/${config.stylesheet || "_default.css"}`)
 
     document.body.innerHTML = html
     document.title = `Gedda - ${filename}`
