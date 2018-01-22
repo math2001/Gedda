@@ -5,6 +5,7 @@ const path = require('path')
 
 const getFilename = (argv, wd) => path.resolve(wd, argv[1] === '.' ? argv[2] : argv[1])
 
+let windows = {}
 
 function getConfig() {
     return JSON.parse(readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
@@ -13,11 +14,16 @@ function getConfig() {
 function createWindow(width, height, filename) {
     const win = new BrowserWindow({width, height})
     win.loadURL(`file:///${__dirname}/app/index.html?filename=${filename}`) // TODO: handle non-existing arguments
+    windows[filename] = win
 }
 
 const isOtherProcess = app.makeSingleInstance((argv, wd) => { 
     const filename = getFilename(argv, wd)
-    createWindow(null, null, getFilename(argv))
+    if (windows[filename]) {
+        windows[filename].show()
+    } else {
+        createWindow(null, null, filename)
+    }
 })
 
 if (isOtherProcess) {
