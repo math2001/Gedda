@@ -1,6 +1,6 @@
-const {app, BrowserWindow, ipcMain} = require("electron")
+const {app, BrowserWindow, ipcMain, dialog} = require("electron")
 const {basedir} = require("xdg")
-const {readFileSync} = require("fs")
+const {readFileSync, writeFileSync} = require("fs")
 
 let mainWindow = null;
 
@@ -29,9 +29,25 @@ app.on("ready", createWindow)
 
 ipcMain.on("get-config", (event, arg) => {
     try {
-        event.returnValue = [null, getConfig()]
+        event.returnValue = getConfig()
     } catch (e) {
-        if (e.message !== undefined) e = e.message
-        event.returnValue = [e, null]
+        dialog.showMessageBox({
+            type: "error",
+            buttons: ["Create", "OK"],
+            defaultId: 0,
+            title: "Couldn't load configuration",
+            message: `Couldn't load configuration file.\n\n${e}\n\nSelect "Create" to create an empty configuration file (default content will be "{}")`,
+            details: e.toString()
+        }, index => {
+            if (index === 0) {
+                try {
+                    writeFileSync(basedir.configPath('Gedda/conf.json'), '{}\n', 'utf-8')
+                } catch (e) {
+                    dialog.showErrorBox("Couldn't write configuration file",
+                    `Couldn't write configuration file:\n\n ${e.toString()}\n\nYou should create it yourself.`)
+                }
+            }
+        })
+        event.returnValue = {}
     }
 })
