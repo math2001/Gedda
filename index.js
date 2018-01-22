@@ -4,28 +4,35 @@ const {readFileSync, writeFileSync} = require("fs")
 
 let mainWindow = null;
 
-function getFilename() {
-    if (process.argv[1] === '.') return `${__dirname}/README.md` // for debugging purpose
-    return process.argv[1]
-}
+const getFilename = argv => argv[1] === '.' ? argv[2] : argv[1]
 
 function getConfig() {
     return JSON.parse(readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
 }
 
-function createWindow(width, height) {
+function createWindow(width, height, filename) {
     mainWindow = new BrowserWindow({width, height})
-    mainWindow.loadURL(`file:///${__dirname}/app/index.html?filename=${getFilename()}`) // TODO: handle non-existing arguments
+    mainWindow.loadURL(`file:///${__dirname}/app/index.html?filename=${filename}`) // TODO: handle non-existing arguments
     mainWindow.on("close", () => {
         mainWindow = null
     })
 }
 
-app.on("window-all-closed", () => {
-    app.quit()
+const isOtherProcess = app.makeSingleInstance((argv, wd) => { 
+    createWindow(null, null, getFilename(argv))
 })
 
-app.on("ready", createWindow)
+if (isOtherProcess) {
+    app.quit()
+}
+
+// app.on("window-all-closed", () => {
+//     app.quit()
+// })
+
+app.on("ready", () => {
+    createWindow(null, null, getFilename(process.argv))
+})
 
 ipcMain.on("get-config", (event, arg) => {
     try {
