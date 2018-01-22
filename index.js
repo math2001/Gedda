@@ -3,7 +3,8 @@ const {basedir} = require("xdg")
 const {readFileSync, writeFileSync} = require("fs")
 const path = require('path')
 
-const getFilename = argv => path.resolve(process.cwd(), argv[1] === '.' ? argv[2] : argv[1])
+const getFilename = (argv, wd) => path.resolve(wd, argv[1] === '.' ? argv[2] : argv[1])
+
 
 function getConfig() {
     return JSON.parse(readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
@@ -15,6 +16,7 @@ function createWindow(width, height, filename) {
 }
 
 const isOtherProcess = app.makeSingleInstance((argv, wd) => { 
+    const filename = getFilename(argv, wd)
     createWindow(null, null, getFilename(argv))
 })
 
@@ -23,7 +25,7 @@ if (isOtherProcess) {
 }
 
 app.on("ready", () => {
-    createWindow(null, null, getFilename(process.argv))
+    createWindow(null, null, getFilename(process.argv, process.cwd()))
 })
 
 ipcMain.on("get-config", (event, arg) => {
