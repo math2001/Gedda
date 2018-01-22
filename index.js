@@ -14,6 +14,9 @@ function getConfig() {
 function createWindow(width, height, filename) {
     const win = new BrowserWindow({width, height})
     win.loadURL(`file:///${__dirname}/app/index.html?filename=${filename}`) // TODO: handle non-existing arguments
+    win.on("close", () => {
+        delete windows[filename]
+    })
     windows[filename] = win
 }
 
