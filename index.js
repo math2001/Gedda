@@ -3,7 +3,7 @@ const {basedir} = require("xdg")
 const {readFileSync, writeFileSync} = require("fs")
 const path = require('path')
 
-const getFilename = argv => path.join(process.cwd(), argv[1] === '.' ? argv[2] : argv[1])
+const getFilename = argv => path.resolve(process.cwd(), argv[1] === '.' ? argv[2] : argv[1])
 
 function getConfig() {
     return JSON.parse(readFileSync(basedir.configPath("Gedda/conf.json"), 'utf-8'))
